@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import NmsApi from "../api/NmsApi";
-
+import useInterval from "../hook/useInterval";
 
 const MonitoringPage = () => {
 
@@ -12,6 +12,15 @@ const MonitoringPage = () => {
             console.log(e);
         }
     }
+
+    useInterval(async () => {
+        try {
+            const response = await NmsApi.startMonitoring();
+            console.log(response);
+        } catch(e) {
+            console.log(e);
+        }
+    }, 5000);
 
     return (
         <>
