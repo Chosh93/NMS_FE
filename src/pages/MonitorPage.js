@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import NmsApi from "../api/NmsApi";
 import useInterval from "../hook/useInterval";
 
 const MonitoringPage = () => {
+    const [cpuCost, setCpuCost] = useState("");
 
     const onClickMonitorStart = async () => {
         try {
@@ -16,7 +17,8 @@ const MonitoringPage = () => {
     useInterval(async () => {
         try {
             const response = await NmsApi.startMonitoring();
-            console.log(response);
+            console.log(response.data.cpuCost);
+            setCpuCost(response.data.cpuCost);
         } catch(e) {
             console.log(e);
         }
@@ -25,6 +27,7 @@ const MonitoringPage = () => {
     return (
         <>
         <button onClick={onClickMonitorStart}>모니터링 시작</button>
+        <h1>{cpuCost}</h1>
         </>
     )
 }
